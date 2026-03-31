@@ -1,0 +1,49 @@
+-- BedMitr — MySQL schema (run once)
+CREATE DATABASE IF NOT EXISTS bedmitr CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE bedmitr;
+
+CREATE TABLE IF NOT EXISTS hospitals (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  address VARCHAR(500) NOT NULL,
+  city VARCHAR(100) NOT NULL,
+  state VARCHAR(100) NULL,
+  phone VARCHAR(40) NOT NULL,
+  email_contact VARCHAR(255) NULL,
+  emergency_line VARCHAR(40) NULL,
+  total_icu_beds INT UNSIGNED NOT NULL DEFAULT 0,
+  available_icu_beds INT UNSIGNED NOT NULL DEFAULT 0,
+  latitude DECIMAL(10, 7) NULL,
+  longitude DECIMAL(10, 7) NULL,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  full_name VARCHAR(200) NOT NULL,
+  role ENUM('admin', 'hospital', 'user') NOT NULL DEFAULT 'user',
+  hospital_id INT UNSIGNED NULL,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_user_hospital FOREIGN KEY (hospital_id) REFERENCES hospitals(id) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS bed_update_log (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  hospital_id INT UNSIGNED NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
+  previous_available INT UNSIGNED NOT NULL,
+  new_available INT UNSIGNED NOT NULL,
+  note VARCHAR(500) NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_log_hospital FOREIGN KEY (hospital_id) REFERENCES hospitals(id) ON DELETE CASCADE,
+  CONSTRAINT fk_log_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_hospitals_city ON hospitals(city);
+CREATE INDEX idx_users_role ON users(role);

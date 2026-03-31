@@ -1,0 +1,20 @@
+# MySQL for BedMitr — run from project root: docker compose up -d
+# Then copy server/.env.example → server/.env (defaults match this file).
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: bedmitr_root_change_me
+      MYSQL_DATABASE: bedmitr
+      MYSQL_USER: bedmitr
+      MYSQL_PASSWORD: bedmitr_app
+    ports:
+      - "3306:3306"
+    volumes:
+      - bedmitr_mysql_data:/var/lib/mysql
+      - ./server/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+
+volumes:
+  bedmitr_mysql_data:
