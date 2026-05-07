@@ -1,4 +1,4 @@
-# BedMitr
+# BedMitra
 
 Real-time ICU bed availability for metropolitan hospitals. Citizens find open capacity before routing through traffic; hospital staff publish live counts; administrators govern users and facilities.
 
@@ -19,7 +19,7 @@ The React app proxies `/api` to **http://localhost:5000**. That error means the 
 
 ## Quick start (Docker MySQL + API + web)
 
-From the **project root** (`BedMitr/`):
+From the **project root** (`BedMitra/`):
 
 1. Start MySQL (first time may take a minute to initialize):
 
@@ -35,7 +35,7 @@ From the **project root** (`BedMitr/`):
    npm install --prefix client
    ```
 
-3. Ensure `server/.env` exists (copy from `server/.env.example` if needed). Defaults match Docker: user `bedmitr`, password `bedmitr_app`, database `bedmitr`.
+3. Ensure `server/.env` exists (copy from `server/.env.example` if needed). Defaults match Docker: user `BedMitra`, password `BedMitra_app`, database `BedMitra`.
 
 4. Load demo data:
 
@@ -80,9 +80,9 @@ npm run dev
 
 After `npm run seed` in `server/`:
 
-- `admin@bedmitr.local` / `Admin123!`
-- `icu.staff@apollohyd.com` / `Hospital123!` (Apollo Hyderabad)
-- `citizen@demo.com` / `User123!`
+- `admin@gmail.com` / `123456789`
+- `apollo@gmail.com` / `12345678` (Apollo Hyderabad)
+- `citizen@gmail.com` / `12345678`
 
 ## Roles
 
@@ -112,4 +112,4 @@ Local development stays the same: the Vite dev server proxies `/api` to `http://
 
 ## Disclaimer
 
-BedMitr is a demonstration routing aid. Always follow local EMS protocols and official emergency numbers (e.g. 108 in India). Bed counts are only as accurate as the data entered by authorized hospital users.
+BedMitra is a demonstration routing aid. Always follow local EMS protocols and official emergency numbers (e.g. 108 in India). Bed counts are only as accurate as the data entered by authorized hospital users.
